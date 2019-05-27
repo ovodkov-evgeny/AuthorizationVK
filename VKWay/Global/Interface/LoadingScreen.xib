@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="LoadingScreen" customModule="VKWay" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="40" height="20"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="active" translatesAutoresizingMaskIntoConstraints="NO" id="z4x-k9-AfW">
+                    <rect key="frame" x="0.0" y="5" width="10" height="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="sE1-cz-3ll"/>
+                        <constraint firstAttribute="width" constant="10" id="tvc-s5-O3f"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="active" translatesAutoresizingMaskIntoConstraints="NO" id="e4u-3k-Vgm">
+                    <rect key="frame" x="15" y="5" width="10" height="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="10" id="U6k-wZ-JY7"/>
+                        <constraint firstAttribute="height" constant="10" id="WFC-wk-iqM"/>
+                    </constraints>
+                </imageView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="active" translatesAutoresizingMaskIntoConstraints="NO" id="Owa-Ag-2PH">
+                    <rect key="frame" x="30" y="5" width="10" height="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="10" id="WIY-DN-Zb0"/>
+                        <constraint firstAttribute="width" constant="10" id="ovh-nm-php"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Owa-Ag-2PH" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="59F-ew-uDD"/>
+                <constraint firstItem="Owa-Ag-2PH" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="8qg-zE-cIK"/>
+                <constraint firstItem="z4x-k9-AfW" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Tym-3H-5aT"/>
+                <constraint firstItem="e4u-3k-Vgm" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="VJ8-8a-DZJ"/>
+                <constraint firstItem="e4u-3k-Vgm" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="15" id="YYj-rd-Mip"/>
+                <constraint firstItem="z4x-k9-AfW" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="h0d-LP-28o"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="state0" destination="z4x-k9-AfW" id="hKH-ss-ZTf"/>
+                <outlet property="state100" destination="Owa-Ag-2PH" id="7Xp-Bp-jIh"/>
+                <outlet property="state50" destination="e4u-3k-Vgm" id="rwN-pQ-kRj"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="active" width="67.5" height="67.5"/>
+    </resources>
+</document>
