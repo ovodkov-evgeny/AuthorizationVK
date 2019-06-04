@@ -4,7 +4,8 @@
 //
 //  Created by Евгений Оводков on 01/03/2019.
 //  Copyright © 2019 Евгений Оводков. All rights reserved.
-//
+
+// Как убрать Deleted контакты?)
 
 import UIKit
 import RealmSwift
