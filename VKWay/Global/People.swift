@@ -22,7 +22,7 @@ class AllPeople{
     private init() {}
     
     func setPeopleDetails(people:People)  {
-    
+        
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.vk.com"
@@ -43,7 +43,7 @@ class AllPeople{
             
             guard peopleData.response.count > 0 else { return }
             let element = peopleData.response[0]
-                
+            
             let name = element.first_name+" "+element.last_name
             people.name         = name
             people.avatarURL    = element.photo_100
@@ -82,7 +82,7 @@ class People{
             self.avatar     = UIImage(data: imageData)
         }
     }
-
+    
 }
 
 
@@ -100,6 +100,14 @@ class PeopleRealm: Object{
         self.avatarURL  = people.avatarURL
         self.name       = people.name
         self.avatar     = people.avatar?.jpegData(compressionQuality: 1)
+    }
+    
+    convenience init(_ id:Int, _ name:String, _ avatarURL:String) {
+        self.init()
+        self.id         = id
+        self.avatarURL  = avatarURL
+        self.name       = name
+        self.avatar     = UIImage(url: avatarURL)?.jpegData(compressionQuality: 1)
     }
     
     override static func primaryKey() -> String? {

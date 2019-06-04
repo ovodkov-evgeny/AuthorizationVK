@@ -26,7 +26,7 @@ class Group {
         if let imageData = realmObject.avatar {
             self.avatar     = UIImage(data: imageData)
         }
-
+        
     }
     
 }
@@ -49,7 +49,7 @@ class GroupRealm: Object {
     override static func primaryKey() -> String? {
         return "id"
     }
-
+    
     
 }
 
