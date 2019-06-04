@@ -83,7 +83,7 @@ class Articles {
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.vk.com"
-        urlComponents.path = "/method/wall.get"
+        urlComponents.path = "/method/newsfeed.get"
         urlComponents.queryItems = [
             URLQueryItem(name: "access_token", value: Session.current.token),
             URLQueryItem(name: "owner_id", value: "\(id)"),
