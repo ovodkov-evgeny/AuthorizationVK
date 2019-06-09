@@ -19,7 +19,7 @@ fileprivate struct GroupsData:Codable{
 
 
 class Groups {
-
+    
     static var current = Groups()
     
     var list:[Group] = []
@@ -29,19 +29,19 @@ class Groups {
     
     func load(vc:UIViewController, complitionHandler: @escaping ()->()) {
         
-        if Database.session.loadGroups() {
-            complitionHandler()
-            return
-        }
+        //        if Database.session.loadGroups() {
+        //            complitionHandler()
+        //            return
+        //        }
         
         Session.current.authorization(controller: vc) {
             Groups.current.getUserGroupsVK {
                 complitionHandler()
             }
         }
-
+        
     }
-
+    
     
     func getUserGroupsVK(filter:String = "", completionHandler: @escaping ()->() ) {
         
@@ -59,13 +59,13 @@ class Groups {
         list.removeAll()
         
         guard let url = urlComponents.url else { return }
-
+        
         AF.request(url).response{ response in
             guard response.data != nil, let data = response.data else { return }
-
+            
             let groupsData = try! JSONDecoder().decode(GroupsData.self
                 , from: data)
-
+            
             for groupData in groupsData.response.items {
                 
                 guard filter.isEmpty || groupData.name.lowercased().contains(filter.lowercased()) else { continue }
@@ -74,12 +74,11 @@ class Groups {
                 
             }
             
-            Database.session.writeGroups()
-
+            
             completionHandler()
             
         }
-
+        
     }
     
     func searchGroupsVK(filter:String = "",exclude:[Group]=[], completionHandler: @escaping ([Group])->() ) {
@@ -121,6 +120,6 @@ class Groups {
         }
         
     }
-
+    
     
 }

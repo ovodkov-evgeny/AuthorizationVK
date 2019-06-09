@@ -63,5 +63,5 @@ node_modules
 sourcetree-hook.json
 *.xcscheme
 *.xcworkspacedata
-*.plist
+
 

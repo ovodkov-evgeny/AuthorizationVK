@@ -35,9 +35,9 @@ class ArticleViewController: UIViewController {
         articleTableView.reloadData()
         
         Session.current.authorization(controller: self) {
-            Articles.current.getArticlesVK(id: self.id, completionHandler: {
-                self.articleTableView.reloadData()
-            })
+//            Articles.current.getArticlesVK(id: self.id, completionHandler: {
+//                self.articleTableView.reloadData()
+//            })
         }
         
     }

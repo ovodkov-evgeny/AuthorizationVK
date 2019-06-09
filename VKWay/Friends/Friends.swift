@@ -9,6 +9,7 @@
 
 import Alamofire
 import Foundation
+import RealmSwift
 
 
 
@@ -33,32 +34,26 @@ class Friends {
     
     static let current = Friends()
     
-    var list:[People] = []
+    var list:Results<PeopleRealm>?
+    
     
     private init() {}
     
     
-    func load(filter:String="", vc:UIViewController, complitionHandler: @escaping ()->()) {
-      
-        if Database.session.loadFriends(filter) {
-            complitionHandler()
-            return
-        }
+    
+    func load(vc:UIViewController) {
+        
+        list = try? Realm().objects(PeopleRealm.self)
         
         Session.current.authorization(controller: vc) {
-            self.getFriendsVK(filter: filter, completionHandler: {
-                complitionHandler()
-            })
+            self.getFriendsVK()
         }
         
     }
     
     
-    
-    
-    private func getFriendsVK(filter:String = "", completionHandler: @escaping ()->()) {
+    private func getFriendsVK() {
         
-        list.removeAll()
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
@@ -77,45 +72,74 @@ class Friends {
             
             guard let friendsData = try? JSONDecoder().decode(FriendsData.self, from: data) else { return }
             
+            guard let realm = try? Realm() else { fatalError("realm") }
+            realm.beginWrite()
+            
             for friend in friendsData.response.items {
                 
                 let name = friend.first_name+" "+friend.last_name
-                guard filter.isEmpty || name.lowercased().contains(filter.lowercased()) else { continue }
-                let people = People(id: friend.id, name: name, avatar: friend.photo_100)
-                people.avatar = UIImage(url: people.avatarURL)
-                self.list.append(people)
+                
+                let objects = realm.objects(PeopleRealm.self).filter("name == '\(name)' && avatarURL == '\(friend.photo_100)'")
+                
+                if objects.count == 0 {
+                    let people = PeopleRealm(friend.id, name, friend.photo_100)
+                    realm.add(people, update: true)
+                }
                 
             }
             
-            self.list.sort(by: {$0.name > $1.name})
+            do {
+                try realm.commitWrite()
+            } catch {
+                fatalError("\(error)")
+            }
             
-            Database.session.writeFriends()
             
-            completionHandler()
         }
     }
     
     
     
-    
     func getCharactersFromList() -> [Character] {
-        let chars = list.compactMap({ $0.name.first })
+        guard let chars = list?.compactMap({ $0.name.first }) else { return []}
         return Array(Set(chars)).sorted()
     }
     
-    func getElementsByChar(char:Character) -> [People] {
-        return list.filter({ $0.name.first ?? Character("") == char})
+    func getElementsByChar(char:Character) -> [PeopleRealm] {
+        return list?.filter({ $0.name.first ?? Character("") == char}) ?? []
     }
     
-    func getElementsBySection(section: Int) -> [People] {
+    func getElementsBySection(section: Int) -> [PeopleRealm] {
         return getElementsByChar(char: getCharactersFromList()[section])
     }
     
-    func getElement(section: Int, row: Int) throws -> People {
+    func getElement(section: Int, row: Int) throws -> PeopleRealm {
         let friendsBySection = getElementsBySection(section: section)
         return friendsBySection[row]
     }
-
+    
+    func getSectionByElement(_ element:Int) -> Int {
+        let charList    = getCharactersFromList()
+        guard let firstChar   = list?.elements[element].name.first else { return 0 }
+        return charList.firstIndex(of: firstChar) ?? 0
+    }
+    
+    func elementIndexPath(_ index: Int) -> IndexPath {
+        
+        var indexPath = IndexPath(row: index, section: 0)
+        guard let list = Friends.current.list else { return indexPath }
+        
+        let sections = Friends.current.getCharactersFromList()
+        let element  = list.elements[index]
+        
+        if let char = element.name.first {
+            indexPath.section = sections.firstIndex(of: char) ?? 0
+            indexPath.row     = Friends.current.getElementsByChar(char: char).firstIndex(of: element) ?? index
+        }
+        
+        return indexPath
+    }
+    
     
 }
 
