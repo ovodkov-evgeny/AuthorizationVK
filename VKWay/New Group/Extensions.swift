@@ -1,6 +1,6 @@
-
 import UIKit
 import Foundation
+import RealmSwift
 
 
 extension UIView {
@@ -62,3 +62,30 @@ extension Date {
         return -(Calendar.current.dateComponents([.second], from: date, to: self).second ?? 0)
     }
 }
+
+
+
+func needToUpdateTableData(name: String) -> Bool {
+    
+    guard let lastUpdate = UserDefaults.standard.object(forKey: name) as? Date else { return true }
+    
+    guard lastUpdate.seconds(from: Date()) < 3600 else { return true }
+    
+    return false
+    
+}
+
+
+extension Results {
+    func toArray<T>(ofType: T.Type) -> [T] {
+        var array = [T]()
+        for i in 0 ..< count {
+            if let result = self[i] as? T {
+                array.append(result)
+            }
+        }
+        
+        return array
+    }
+}
+

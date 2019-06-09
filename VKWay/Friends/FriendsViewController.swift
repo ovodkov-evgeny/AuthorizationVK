@@ -36,12 +36,12 @@ class FriendsViewController: UIViewController {
         Friends.current.load(vc: self)
         
         //test
-        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
-            let realm = try! Realm()
-            realm.beginWrite()
-            realm.objects(PeopleRealm.self)[0].name = "12345"
-            try? realm.commitWrite()
-        }
+//        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+//            let realm = try! Realm()
+//            realm.beginWrite()
+//            realm.objects(PeopleRealm.self)[0].name = "12345"
+//            try? realm.commitWrite()
+//        }
         
         
         self.token = Friends.current.list?.observe({ (result) in
