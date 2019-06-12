@@ -10,12 +10,21 @@ import Foundation
 import UIKit
 import Alamofire
 import SwiftKeychainWrapper
+import FirebaseAuth
+import FirebaseFirestore
 
 
 class Session {
     
     var token:String
-    var id:Int
+    var id:Int {
+        didSet{
+            let db = Firestore.firestore()
+            db.collection("users").document("\(id)").setData(["id":id], mergeFields: ["id"])
+            
+            
+        }
+    }
     
     var name:String
     var avatar:UIImage?
@@ -31,6 +40,9 @@ class Session {
     
     func authorization(controller: UIViewController,_ completionHandler: @escaping ()->()){
         
+        Auth.auth().signInAnonymously(completion: nil)
+        
+        
         id = UserDefaults.standard.integer(forKey: "id")
         
         if id == 0 {
@@ -41,7 +53,7 @@ class Session {
         if token.isEmpty {
             token = KeychainWrapper.standard.string(forKey: "token") ?? ""
         }
-
+        
         if token.isEmpty {
             openAuthorizationForm(controller: controller, completionHandler: completionHandler)
         }
@@ -80,18 +92,28 @@ class Session {
             
             if jsonResponse.keys.contains("error") {
                 self.openAuthorizationForm(controller: controller, completionHandler: completionHandler)
-                return 
+                return
             } else {
                 completionHandler()
             }
         }
         
     }
-
-    private func openAuthorizationForm(controller: UIViewController, completionHandler: @escaping ()->()) {
+    
+    func logOut(controller: UIViewController) {
+        
+        openAuthorizationForm(controller: controller, logOut: true) {
+            
+        }
+        
+        
+    }
+    
+    private func openAuthorizationForm(controller: UIViewController, logOut:Bool=false, completionHandler: @escaping ()->()) {
         
         let authorization = AuthorizationViewController(nibName: "AuthorizationViewController", bundle: nil)
         authorization.completitionHandler = completionHandler
+        authorization.logOut = logOut
         controller.present(authorization, animated: true)
         
     }

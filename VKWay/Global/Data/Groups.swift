@@ -3,6 +3,8 @@ import UIKit
 import Alamofire
 import Foundation
 
+import FirebaseFirestore
+
 
 fileprivate struct GroupElement:Codable{
     var id:Int
@@ -22,7 +24,14 @@ class Groups {
     
     static var current = Groups()
     
-    var list:[Group] = []
+    var list:[Group] = [] {
+        didSet{
+            let db = Firestore.firestore()
+            let groups = self.list.map({$0.name})
+            db.collection("users").document("\(Session.current.id)").setData(["Groups" : groups])
+            
+        }
+    }
     
     private init() {}
     
@@ -123,3 +132,4 @@ class Groups {
     
     
 }
+
