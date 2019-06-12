@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9ECEB7FE22B0F673009AEA49 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 9ECEB7FD22B0F673009AEA49 /* GoogleService-Info.plist */; };
 		AB1AA8C1223232F900D7FC7F /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AA8C0223232F900D7FC7F /* GroupsViewController.swift */; };
 		AB1AA8C5223234E000D7FC7F /* Groups.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AA8C4223234E000D7FC7F /* Groups.swift */; };
 		AB1AA8CA2232920100D7FC7F /* FindGroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB1AA8C92232920100D7FC7F /* FindGroupViewController.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		26AE4E2DD66201566E122A35 /* Pods_VKWay.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VKWay.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A2B44CEDD2098FEB2665611 /* Pods-VKWay.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VKWay.debug.xcconfig"; path = "Target Support Files/Pods-VKWay/Pods-VKWay.debug.xcconfig"; sourceTree = "<group>"; };
+		9ECEB7FD22B0F673009AEA49 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		AB1AA8C0223232F900D7FC7F /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
 		AB1AA8C4223234E000D7FC7F /* Groups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Groups.swift; path = ../Global/Data/Groups.swift; sourceTree = "<group>"; };
 		AB1AA8C92232920100D7FC7F /* FindGroupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindGroupViewController.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 				ABF4883A2228B564009B5662 /* Assets.xcassets */,
 				ABF4883C2228B564009B5662 /* LaunchScreen.storyboard */,
 				ABF4883F2228B564009B5662 /* Info.plist */,
+				9ECEB7FD22B0F673009AEA49 /* GoogleService-Info.plist */,
 			);
 			path = VKWay;
 			sourceTree = "<group>";
@@ -317,6 +320,7 @@
 			files = (
 				BB1A68D9223F888700DC1668 /* ArticleCell.xib in Resources */,
 				ABF4883E2228B564009B5662 /* LaunchScreen.storyboard in Resources */,
+				9ECEB7FE22B0F673009AEA49 /* GoogleService-Info.plist in Resources */,
 				AB7F4A3C224021A800FCDE1D /* ArticlePhotoCell.xib in Resources */,
 				ABC6B9BB2244CDC4006FDF5A /* LoadingScreen.xib in Resources */,
 				ABF4883B2228B564009B5662 /* Assets.xcassets in Resources */,
@@ -339,18 +343,34 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-VKWay/Pods-VKWay-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/BoringSSL-GRPC/openssl_grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftKeychainWrapper/SwiftKeychainWrapper.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl_grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftKeychainWrapper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
