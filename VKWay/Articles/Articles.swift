@@ -64,10 +64,10 @@ class Articles {
     
     func load(id:Int, vc:UIViewController, complitionHandler: @escaping ()->()) {
         
-        if Database.session.loadArticles() {
-            complitionHandler()
-            return
-        }
+        //        if Database.session.loadArticles() {
+        //            complitionHandler()
+        //            return
+        //        }
         
         Session.current.authorization(controller: vc) {
             self.getArticlesVK(id: id, completionHandler: {
@@ -76,14 +76,14 @@ class Articles {
         }
         
     }
-
+    
     
     func getArticlesVK(id:Int, completionHandler: @escaping ()->() ) {
         
         var urlComponents = URLComponents()
         urlComponents.scheme = "https"
         urlComponents.host = "api.vk.com"
-        urlComponents.path = "/method/wall.get"
+        urlComponents.path = "/method/newsfeed.get"
         urlComponents.queryItems = [
             URLQueryItem(name: "access_token", value: Session.current.token),
             URLQueryItem(name: "owner_id", value: "\(id)"),
@@ -101,9 +101,9 @@ class Articles {
             
             let articlesData = try! JSONDecoder().decode(ArticlesData.self
                 , from: data)
-//            guard let articlesData = try? JSONDecoder().decode(ArticlesData.self
-//                , from: data) else { return }
-
+            //            guard let articlesData = try? JSONDecoder().decode(ArticlesData.self
+            //                , from: data) else { return }
+            
             
             for articleData in articlesData.response.items {
                 
@@ -137,11 +137,11 @@ class Articles {
         self.appendImages(articleData: articleElement, article: article)
         
         self.list.append(article)
-
+        
     }
- 
+    
     private func appendImages(articleData:ArticlesElement, article:Article) {
-      
+        
         guard let attachments = articleData.attachments else { return }
         
         //images

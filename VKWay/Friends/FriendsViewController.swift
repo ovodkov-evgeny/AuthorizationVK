@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class FriendsViewController: UIViewController {
     
@@ -14,6 +15,8 @@ class FriendsViewController: UIViewController {
     @IBOutlet var friendsTableView: UITableView!
     var searchBar: UISearchBar!
     
+    var token:NotificationToken?
+    var list:[PeopleRealm] = []
     
     
     override func viewDidLoad() {
@@ -30,9 +33,42 @@ class FriendsViewController: UIViewController {
         friendsTableView.delegate   = self
         friendsTableView.dataSource = self
         
-        Friends.current.load(vc: self) {
-            self.friendsTableView.reloadData()
-        }
+        Friends.current.load(vc: self)
+        
+        //test
+//        DispatchQueue.main.asyncAfter(deadline: .now()+3) {
+//            let realm = try! Realm()
+//            realm.beginWrite()
+//            realm.objects(PeopleRealm.self)[0].name = "12345"
+//            try? realm.commitWrite()
+//        }
+        
+        
+        self.token = Friends.current.list?.observe({ (result) in
+            switch result{
+            case .initial(_):
+                self.friendsTableView.reloadData()
+            case let .update(_, deletions, insertions, modifications):
+                
+                if deletions.count > 0 || insertions.count > 0 || modifications.count > 0 {
+                    self.friendsTableView.reloadData()
+                }
+                //                self.friendsTableView.beginUpdates()
+                //                self.friendsTableView.insertRows(at: insertions.map({ Friends.current.elementIndexPath($0) }),
+                //                                                 with: .automatic)
+                //                self.friendsTableView.deleteRows(at: deletions.map({ Friends.current.elementIndexPath($0) }),
+                //                                                 with: .automatic)
+                //                self.friendsTableView.reloadRows(at: modifications.map({ Friends.current.elementIndexPath($0) }),
+                //                                                 with: .automatic)
+                //                self.friendsTableView.endUpdates()
+                
+                
+            case .error(let error):
+                fatalError("\(error)")
+            }
+        })
+        
+        
         
     }
     
@@ -52,13 +88,15 @@ extension FriendsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = friendsTableView.dequeueReusableCell(withIdentifier: FriendsTableViewCell.nameStr, for: indexPath) as! FriendsTableViewCell
-
+        
         guard let friend = try? Friends.current.getElement(section: indexPath.section, row: indexPath.row) else {
             return cell
         }
         cell.nameField.text = friend.name
-        cell.avatar.image   = friend.avatar
-
+        if let avatarData = friend.avatar {
+            cell.avatar.image   = UIImage(data: avatarData)
+        }
+        
         return cell
     }
     
@@ -73,16 +111,16 @@ extension FriendsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         searchBar.resignFirstResponder()
-
-     let vc = storyboard?.instantiateViewController(withIdentifier: "FriendPhotosViewController") as! FriendPhotosViewController
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "FriendPhotosViewController") as! FriendPhotosViewController
         guard let friend = try? Friends.current.getElement(section: indexPath.section, row: indexPath.row) else {
             return
         }
         
-        vc.people = friend
-        vc.transitioningDelegate = self
-        present(vc, animated: true, completion: nil)
-
+        //        vc.people = friend
+        //        vc.transitioningDelegate = self
+        //        present(vc, animated: true, completion: nil)
+        
         
     }
     
@@ -90,7 +128,7 @@ extension FriendsViewController: UITableViewDelegate {
         
         guard (searchBar.text ?? "").isEmpty else { return }
         guard let visibleIndexPath = friendsTableView.indexPathsForVisibleRows?.first else { return }
-
+        
         filterCharControll.selectedChar = Friends.current.getCharactersFromList()[visibleIndexPath.section]
     }
     
@@ -113,11 +151,11 @@ extension FriendsViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-
+        
         let actions:[UITableViewRowAction] = []
-
+        
         return actions
-
+        
     }
 }
 
@@ -125,12 +163,12 @@ extension FriendsViewController: UITableViewDelegate {
 extension FriendsViewController: UISearchBarDelegate {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        Friends.current.load(filter: searchText, vc: self) {
-            self.friendsTableView.reloadData()
-        }
-
-        filterCharControll.alpha = (searchText.isEmpty) ? 1: 0
-        filterCharControll.isEnabled    = searchText.isEmpty
+        //        Friends.current.load(filter: searchText, vc: self) {
+        //            self.friendsTableView.reloadData()
+        //        }
+        //
+        //        filterCharControll.alpha = (searchText.isEmpty) ? 1: 0
+        //        filterCharControll.isEnabled    = searchText.isEmpty
     }
     
 }

@@ -15,6 +15,7 @@ class AuthorizationViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView! 
     var completitionHandler: (()->())?
     
+    var logOut = false
     
     override func viewDidLoad() {
         super.viewDidLoad()

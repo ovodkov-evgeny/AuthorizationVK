@@ -10,5 +10,9 @@ target 'VKWay' do
 pod 'Alamofire', '~> 5.0.0-beta.6'
 pod 'RealmSwift', '~> 3.15.0'
 pod 'SwiftKeychainWrapper', '~> 3.3.0'
+pod 'Firebase/Core'
+pod 'Firebase/Database'
+pod 'Firebase/Auth'
+pod 'Firebase/Firestore'
 
 end
